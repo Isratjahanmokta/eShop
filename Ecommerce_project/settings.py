@@ -14,7 +14,7 @@ SECRET_KEY = 'django-insecure-k($dumkgafb#tbx&qaum#qkd)n-7-w1xd!-=z!jpuvaas4kc)%
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['localhost']
 
 
 # Application definition
@@ -26,6 +26,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sites',
     'authentication',
     'eshop',
     'crispy_forms',
@@ -34,6 +35,9 @@ INSTALLED_APPS = [
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
+    
+    'allauth.socialaccount.providers.facebook',
+    'allauth.socialaccount.providers.google',
 ]
 
 CRISPY_TEMPLATE_PACK = 'bootstrap5'
@@ -67,9 +71,21 @@ TEMPLATES = [
     },
 ]
 
-SITE_ID = 1
+SITE_ID = 2
 
-
+SOCIALACCOUNT_PROVIDERS = {
+    'google': {
+        'SCOPE': [
+            'profile',
+            'email',
+        ],
+        'AUTH_PARAMS': {
+            'access_type': 'online',
+        },
+        'OAUTH_PKCE_ENABLED': True,
+    }
+    
+}
 
 AUTHENTICATION_BACKENDS = [
 
@@ -140,6 +156,7 @@ STATIC_URL = 'static/'
 
 
 LOGIN_REDIRECT_URL = 'home'
+LOGOUT_REDIRECT_URL = 'home'
 
 #media url
 MEDIA_ROOT = os.path.join(BASE_DIR,'media')
