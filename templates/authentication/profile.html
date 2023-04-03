@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Home{% endblock title %}
+
+{% block body_block %}
+<h1>this is user profile</h1>
+{% for info in profile %}
+{{info.username}}
+{% endfor %}
+    {{profile.username}}
+{% endblock %}
