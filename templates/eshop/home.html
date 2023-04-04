@@ -14,7 +14,7 @@
                 </div>
                 <figcaption class="info-wrap">
                     <h6 class="title">
-                        <a href="">{{product.name}}</a></h6>
+                        <a href="{% url 'eshop:product_details' pk=product.pk %}">{{product.name}}</a></h6>
                     <div class="action-wrap">
                         <div class="price-wrap h5">
                             <span class="price-new">&#2547; {{product.price | floatformat:2}}</span>

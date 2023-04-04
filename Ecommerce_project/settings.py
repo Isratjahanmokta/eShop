@@ -29,6 +29,7 @@ INSTALLED_APPS = [
     'django.contrib.sites',
     'authentication',
     'eshop',
+    'order',
     'crispy_forms',
     'crispy_bootstrap5',
     
