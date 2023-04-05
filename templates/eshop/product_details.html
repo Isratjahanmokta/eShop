@@ -30,7 +30,7 @@
                             <p>{{object.detail_text |linebreaks}}</p>
                         </dd>
                     </dl>
-                    <a href="#" class="btn btn-lg btn-outline-primary text-uppercase">Add to Cart</a>
+                    <a href="{% url 'order:add_to_cart' pk=object.pk %}" class="btn btn-lg btn-outline-primary text-uppercase">Add to Cart</a>
                 </article>
             </aside>
 
