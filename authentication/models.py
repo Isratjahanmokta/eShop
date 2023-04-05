@@ -25,7 +25,7 @@ class Profile(models.Model):
     phone = models.CharField(max_length=20, blank=True)
     
     def __str__(self):
-        return self.user
+        return self.username
     
     def is_fully_filled(self):
         fields_names = [f.name for f in self._meta.get_fields()]

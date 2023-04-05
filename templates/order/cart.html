@@ -1,0 +1,54 @@
+{% extends 'nav-bar.html' %}
+{% load static %}
+{% block title %} My Cart{% endblock title %}
+
+{% block body_block %}
+<div class="container my-5">
+    <div class="my-5">
+        <h2>Your Cart</h2>
+    </div>
+    <table class="table table-hover ">
+        <thead class="thead-dark">
+            <tr>
+                <th scope="col" width="'15%">#</th>
+                <th scope="col" width="'15%">Product Name</th>
+                <th scope="col" width="'15%">Quantity</th>
+                <th scope="col" width="'15%">Price</th>
+                <th scope="col" width="'15%">Remove</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for cart in carts %}
+            <tr>
+                <th scope="row">{{forloop.counter}}</th>
+                <td>{{cart.item.name}}</td>
+                <td>
+                    <a  class="my-2" href="#">
+                        <span class="badge badge-light "><i class="fa-solid fa-plus"></i></span>
+                    </a>
+                    {{cart.quantity}}
+                    <a class="my-2" href="#">
+                        <span class="badge "><i class="fa-solid fa-minus"></i></i></span>
+                    </a>
+                </td>
+                <td align="right">&#2547; {{cart.get_tot_price}}</td>
+                <td><a href="#" class="btn btn-danger btn-sm">Remove from Cart</a></td>
+            </tr>
+            {% endfor %}
+            <tr>
+                <th scope="row"></th>
+                <td colspan="2">Total</td>
+                <td  colspan="1" align="right">&#2547; {{order.get_total | floatformat:2}} </td>
+            </tr>
+            <tr>
+                <th scope="row"></th>
+                <td colspan="4" class="text-right">
+                    <a href="{% url 'eshop:home'%}" class="btn btn-warning mr-4"> Continue</a>
+                    <a href="#" class="btn btn-primary mr-4"> Checkout</a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+    
+{% endblock %}

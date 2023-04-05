@@ -16,8 +16,8 @@ class Cart(models.Model):
         return f'{self.quantity} X {self.item}'
     
     def get_tot_price(self):
-        total = self.item.price * self.quanrity
-        float_total = format(total, 'o,2f')
+        total = self.item.price * self.quantity
+        float_total = format(total, '.2f')
         return float_total
     
 class Order(models.Model):
@@ -29,6 +29,6 @@ class Order(models.Model):
     
     def get_total(self):
         total = 0
-        for order_item in self.order_item.all():
-            total += float(order_item.get_total())
+        for order_items in self.order_item.all():
+            total += float(order_items.get_tot_price())
         return total   
