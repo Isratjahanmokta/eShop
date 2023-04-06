@@ -10,7 +10,7 @@ class Cart(models.Model):
     quantity = models.IntegerField(default=1)
     purchased = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
     
     def __str__(self) -> str:
         return f'{self.quantity} X {self.item}'

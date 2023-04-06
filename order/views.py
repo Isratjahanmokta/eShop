@@ -28,7 +28,8 @@ def add_to_cart(request, pk):
         order.order_item.add(order_items[0])
         messages.info(request, "This item was added to your cart.")
         return redirect("eshop:home")
-            
+ 
+@login_required           
 def cart_view(request):
     carts = Cart.objects.filter(user=request.user, purchased=False)
     orders = Order.objects.filter(user=request.user, ordered=False)

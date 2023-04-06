@@ -5,7 +5,7 @@
 {% block body_block %}
 <div class="container my-5">
     <div class="my-5">
-        <h2>Your Cart</h2>
+        <h2>My Cart</h2>
     </div>
     <table class="table table-hover ">
         <thead class="thead-dark">
@@ -24,11 +24,11 @@
                 <td>{{cart.item.name}}</td>
                 <td>
                     <a  class="my-2" href="#">
-                        <span class="badge badge-light "><i class="fa-solid fa-plus"></i></span>
+                        <span><i class="fa-solid fa-plus"></i></span>
                     </a>
                     {{cart.quantity}}
                     <a class="my-2" href="#">
-                        <span class="badge "><i class="fa-solid fa-minus"></i></i></span>
+                        <span><i class="fa-solid fa-minus"></i></i></span>
                     </a>
                 </td>
                 <td align="right">&#2547; {{cart.get_tot_price}}</td>
