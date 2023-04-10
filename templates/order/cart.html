@@ -32,7 +32,7 @@
                     </a>
                 </td>
                 <td align="right">&#2547; {{cart.get_tot_price}}</td>
-                <td><a href="{% url 'order:remove' pk=cart.item.pk %}"" class="btn btn-danger btn-sm">Remove Item</a></td>
+                <td><a href="{% url 'order:remove' pk=cart.item.pk %}" class="btn btn-danger btn-sm">Remove Item</a></td>
             </tr>
             {% endfor %}
             <tr>
@@ -44,7 +44,7 @@
                 <th scope="row"></th>
                 <td colspan="4" class="text-right">
                     <a href="{% url 'eshop:home'%}" class="btn btn-warning mr-4"> Continue</a>
-                    <a href="#" class="btn btn-primary mr-4"> Checkout</a>
+                    <a href="{% url 'order:checkout' %}" class="btn btn-success mr-4">Process To Checkout</a>
                 </td>
             </tr>
         </tbody>
