@@ -1,8 +1,8 @@
 from django import forms
-from .models import BillingAddress
+from order.models import BillingAddress
 
 
 class BillingForm(forms.ModelForm):
     class Meta:
-        Model = BillingAddress
+        model = BillingAddress
         fields = ['address', 'zipcode', 'city', 'country']
