@@ -131,4 +131,4 @@ def checkout(request):
     cart_qs = Cart.objects.filter(user=request.user, purchased=False)
     order_item = order_qs[0].order_item.all()
     order_total = order_qs[0].get_total()
-    return render(request, 'order/checkout.html', context={'form': form, 'order_items': order_item, 'order_total': order_total, 'cart_items':cart_qs})
+    return render(request, 'order/checkout.html', context={'form': form, 'order_items': order_item, 'order_total': order_total, 'cart_items':cart_qs, 'saved_address':saved_address})
