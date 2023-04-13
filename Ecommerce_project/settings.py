@@ -1,20 +1,31 @@
 import os
 from pathlib import Path
+import environ
+
+# Initialise environment variables
+env = environ.Env()
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+env.read_env(os.path.join(BASE_DIR, '.env'))
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-k($dumkgafb#tbx&qaum#qkd)n-7-w1xd!-=z!jpuvaas4kc)%'
+
+SECRET_KEY = env('SECRET_KEY')
+print(SECRET_KEY)
+
+#SECRET_KEY = 'django-insecure-k($dumkgafb#tbx&qaum#qkd)n-7-w1xd!-=z!jpuvaas4kc)%'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
 
-ALLOWED_HOSTS = []
+DEBUG = env('DEBUG')
+
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -109,11 +120,11 @@ WSGI_APPLICATION = 'Ecommerce_project.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'ecommerce',
-        'USER': 'postgres',
-        'PASSWORD': 'postgres',
-        'HOST': 'localhost',
-        'PORT': '5432',
+        'NAME': env('DATABASE_NAME', default='ecommerce'),
+        'USER': env('DATABASE_USER', default='postgres'),
+        'PASSWORD': env('DATABASE_PASSWORD', default='postgres'),
+        'HOST': env('DATABASE_HOST', default='localhost'),
+        'PORT': env('DATABASE_PORT', default='5432'),
     }
 }
 
