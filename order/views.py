@@ -5,6 +5,11 @@ from eshop.models import Product
 from order.forms import BillingForm
 from django.contrib import messages
 
+#for payment
+from sslcommerz_python.payment import SSLCSession
+from decimal import Decimal
+import socket
+
 # Create your views here.
 
 
@@ -20,17 +25,17 @@ def add_to_cart(request, pk):
             order_items[0].quantity += 1
             order_items[0].save()
             messages.info(request, "This item quantity was updated.")
-            return redirect("eshop:home")
+            return redirect("order:cart")
         else:
             order.order_item.add(order_items[0])
             messages.info(request, "This item was added to your cart.")
-            return redirect("eshop:home")
+            return redirect("order:cart")
     else:
         order = Order(user=request.user)
         order.save()
         order.order_item.add(order_items[0])
         messages.info(request, "This item was added to your cart.")
-        return redirect("eshop:home")
+        return redirect("order:home")
 
 
 @login_required
@@ -132,3 +137,17 @@ def checkout(request):
     order_item = order_qs[0].order_item.all()
     order_total = order_qs[0].get_total()
     return render(request, 'order/checkout.html', context={'form': form, 'order_items': order_item, 'order_total': order_total, 'cart_items':cart_qs, 'saved_address':saved_address})
+
+@login_required
+def payment(request):
+    saved_address = BillingAddress.objects.get_or_create(user=request.user)
+    if not saved_address[0].is_fully_filled():
+        messages.info(request, f"Please complete shipping address")
+        return redirect("order:checkout")
+    
+    if not request.user.profile.is_fully_filled():
+        messages.info(request, f"Please complete profile details")
+        return redirect("authentication:edit_profile")
+    
+    return render(request, "order/payment.html", context={})
+        
