@@ -31,7 +31,7 @@ class Profile(models.Model):
         fields_names = [f.name for f in self._meta.get_fields()]
         
         for field_name in fields_names:
-            value = getattr(self. field_name)
+            value = getattr(self, field_name)
             if value is None or value == '':
                 return False
         return True
