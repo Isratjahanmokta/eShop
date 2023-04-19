@@ -26,6 +26,7 @@ class Order(models.Model):
     ordered = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
     payment_id = models.CharField(max_length=200, blank=True, null=True)
+    order_id = models.CharField(max_length=200, blank=True, null=True)
     
     def get_total(self):
         total = 0
