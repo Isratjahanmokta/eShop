@@ -1,4 +1,4 @@
-from django.shortcuts import render, get_object_or_404, redirect
+from django.shortcuts import render, get_object_or_404, redirect, HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
 from django.urls import reverse
 from order.models import Cart, Order, BillingAddress
@@ -178,12 +178,12 @@ def payment(request):
 def payment_complete(request):
     if request.method == 'POST' or request.method == 'post':
         payment_data = request.POST
-        print(payment_data)
         status = payment_data['status']
     if status == 'VALID':
         val_id = payment_data['val_id']
         tran_id = payment_data['tran_id']
-        messages.success(request, f"Your Payment Completed Successfully! Page will be redirected to home page after 5 secounds")
+        messages.success(request, f"Your Payment Completed Successfully!")
+        return HttpResponseRedirect(reverse("order:purchase", kwargs={'val_id':val_id, 'tran_id':tran_id,}))
     elif status == 'FAILED':
         messages.warning(request, f"Your Payment Failed! Please Try Again!")
     elif status == 'CANCEL':
@@ -191,3 +191,28 @@ def payment_complete(request):
     print(status)
     return render(request, "order/complete.html", context={})
         
+@login_required
+def purchase(request, val_id, tran_id):
+    order_qs = Order.objects.filter(user=request.user, ordered=False)
+    order = order_qs[0]
+    order_id = tran_id
+    order.ordered = True
+    order.order_id = order_id
+    order.payment_id = val_id
+    order.save()
+    cart_items = Cart.objects.filter(user=request.user, purchased=False)
+    for item in cart_items:
+        item.purchased = True
+        item.save()
+    return redirect(reverse("home"))
+
+@login_required
+def my_order(request):
+    try:
+        orders = Order.objects.filter(user=request.user, ordered=True)
+        print(orders)
+        context = {'orders': orders}
+    except:
+        messages.warning(request, f"You do not purchased anything yet!")
+        return redirect("home")
+    return render(request, "order/my_order.html", context)
