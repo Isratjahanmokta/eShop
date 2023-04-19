@@ -10,6 +10,7 @@ from django.contrib import messages
 from sslcommerz_python.payment import SSLCSession
 from decimal import Decimal
 import socket
+from django.views.decorators.csrf import csrf_exempt
 
 # Create your views here.
 
@@ -173,6 +174,20 @@ def payment(request):
     print(response_data)
     return redirect(response_data['GatewayPageURL'])
 
+@csrf_exempt
 def payment_complete(request):
-    return render(request, "order/payment.html")
+    if request.method == 'POST' or request.method == 'post':
+        payment_data = request.POST
+        print(payment_data)
+        status = payment_data['status']
+    if status == 'VALID':
+        val_id = payment_data['val_id']
+        tran_id = payment_data['tran_id']
+        messages.success(request, f"Your Payment Completed Successfully! Page will be redirected to home page after 5 secounds")
+    elif status == 'FAILED':
+        messages.warning(request, f"Your Payment Failed! Please Try Again!")
+    elif status == 'CANCEL':
+        messages.warning(request, f"You have canceled your payment")
+    print(status)
+    return render(request, "order/complete.html", context={})
         
